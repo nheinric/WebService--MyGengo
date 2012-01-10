@@ -1,0 +1,7 @@
+.*\.swp
+\.git.*
+.*\.svn
+Makefile.old
+Makefile
+MANIFEST.bak
+MANIFEST.SKIP
