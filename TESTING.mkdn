@@ -1,7 +1,7 @@
 # Testing
 
 ## Testing with mock objects
- 1. By default, all tests run using L<WebService::MyGengo::Test::Mock::LWP>, a mocked L<LWP::UserAgent>
+ 1. By default, all tests run using WebService::MyGengo::Test::Mock::LWP, a mocked LWP::UserAgent
 
 ## Live Sandbox Testing
  1. Open t/lib/WebService/MyGengo/Test/Util/Config.pm in a text editor
