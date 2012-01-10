@@ -3,6 +3,7 @@ use inc::Module::Install;
 
 name 'WebService-MyGengo';
 all_from 'lib/WebService/MyGengo/Client.pm';
+readme_markdown_from 'lib/WebService/MyGengo/Client.pm';
 readme_from 'lib/WebService/MyGengo/Client.pm';
 
 requires 'Moose';

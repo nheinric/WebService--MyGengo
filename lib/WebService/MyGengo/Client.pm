@@ -1075,9 +1075,7 @@ __PACKAGE__->meta->make_immutable();
 
  * Support perl < 5.10? Necessary?
 
- * I'm not 100% sold on this implementation. I waffle back and forth on whether
-or not the real API objects should be able to do their own requesting
-/error handling/etc instead of this client.
+ * I'm not 100% sold on this implementation. I waffle back and forth on whether or not the real API objects should be able to do their own requesting /error handling/etc instead of this client.
 
 =head1 ACKNOWLEDGEMENTS
 
