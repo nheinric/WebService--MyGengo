@@ -60,7 +60,7 @@ sub client {
         $client = WebService::MyGengo::Client->new( \%args );
 
         # A mock LWP to simulate real API access
-        my $ua = WebService::MyGengo::Test::Mock::LWP->new();
+        my $ua = WebService::MyGengo::Test::Mock::LWP->new( %args );
         $client->_set_user_agent( $ua );
     }
     else {

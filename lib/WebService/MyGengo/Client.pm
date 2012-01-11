@@ -50,7 +50,7 @@ A perl library for accessing the MyGengo (L<http://mygengo.com>) API.
 
     # Seeing what went wrong by inspecting the `last_response`
     unless ( $job = $client->get_job( "BLARGH!" ) ) {
-        MyApp::Exception->throw({ message => "Oops: ".$client->last_response()->message });
+        MyApp::Exception->throw({ message => "Oops: ".$client->last_response->message });
     }
 
 =head1 ATTRIBUTES

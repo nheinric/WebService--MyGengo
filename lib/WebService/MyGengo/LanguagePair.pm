@@ -70,8 +70,7 @@ __PACKAGE__->meta->make_immutable();
 
 =head2 TODO
 
- * Provide accessors to retrieve L<WebService::MyGengo::Language>s for each of
-the languages
+ * Provide accessors to retrieve L<WebService::MyGengo::Language> objects for each of the languages
 
 =head2 SEE ALSO
 

@@ -24,7 +24,7 @@ in the classes in which they're used, instead?
 subtype 'WebService::MyGengo::LanguageCode'
     , as 'Str'
     , where { my $len = length($_); ($len == 2 || $len ==  5) }
-    , message { "Valid language codes 2 or 5 characters: '$_'" }
+    , message { "Valid language codes are 2 or 5 characters: '$_'" }
     ;
 
 # todo Not all values in this range are valid error codes

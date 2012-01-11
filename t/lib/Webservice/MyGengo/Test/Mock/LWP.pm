@@ -363,7 +363,8 @@ sub request {
         %params = $u->query_form;
     }
 
-    my $type    = (length($params{api_key}) > 8 ? "OK" : $params{api_key});
+    my $key     = $params{api_key};
+    my $type    = (length($key) > 8 || $key eq 'pubkey') ? "OK" : $key;
     my $data    = $params{data}
                     ? from_json( uri_unescape($params{data}), { utf8 => 1 } )
                     : {};
