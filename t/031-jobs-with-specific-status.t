@@ -107,7 +107,10 @@ sub teardown {
 sub _setup {
     if ( $LIVE == 1 ) {
         print STDERR "Submitting test Jobs to the sandbox...\n";
-        create_dummy_job( $client ) for ( 0 .. 13 );
+        for ( 0 .. 13 ) {
+            create_dummy_job( $client )
+                or die "Error creating Job: ".$client->last_response->message;
+        }
         print STDERR<<EOT;
 14 dummy Jobs have been created in your sandbox:
 Set them all to 'reviewable' status and run the test again with
