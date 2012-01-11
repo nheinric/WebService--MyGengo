@@ -3,8 +3,6 @@ package WebService::MyGengo::Client;
 use Moose;
 use MooseX::NonMoose;
 use namespace::autoclean;
-use version; our $VERSION = qv('v0.1.0');
-use v5.10.0; # todo We use the // operator
 
 extends qw(WebService::MyGengo::Base);
 
@@ -12,6 +10,7 @@ use LWP::UserAgent;
 use Scalar::Util qw(blessed);
 use URI;
 
+use WebService::MyGengo;
 use WebService::MyGengo::Account;
 use WebService::MyGengo::Job;
 
@@ -189,7 +188,7 @@ has user_agent_string => (
     , lazy      => 1
     , init_arg  => undef
     , default   => sub {
-        'Webservice::MyGengo::Client '.$VERSION
+        __PACKAGE__." ".$WebService::MyGengo::VERSION
         }
     );
 
