@@ -85,7 +85,7 @@ sub api_error_code_handled_correctly {
     my $res = $client->last_response;
 
     ok( $res->is_error, "Res is error" );
-    is( $res->code, 200, "Res has 200 error code" );
+    is( $res->_raw_response->code, 200, "Raw res has 200 error code" );
     isnt( $res->error_code, 0, "Has an API error code" );
     isnt( $res->error_code, 200, "API Error is not 200" );
 
@@ -109,7 +109,7 @@ sub transport_error_code_handled_correctly {
     $struct = $res->response_struct;
 
     ok( $res->is_error, "Res is error" );
-    is( $res->code, 404, "Res has 404 error code" );
+    is( $res->_raw_response->code, 404, "Raw res has 404 error code" );
     is( $res->error_code, 0, "Has no API error code" );
     isnt( $res->error_code, 200, "Error is not 200" );
     diag "You can safely disregard the 404 error.";

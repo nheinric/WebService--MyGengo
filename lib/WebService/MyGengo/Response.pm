@@ -1,7 +1,6 @@
 package WebService::MyGengo::Response;
 
 use Moose;
-use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 
 extends 'WebService::MyGengo::Base';
@@ -74,7 +73,7 @@ The raw HTTP response is available via `$response->_raw_response`.
 todo Relationship between this object and L<HTTP::Response> needs a rethink.
 
 =cut
-sub code { shift->error_message }
+sub code { shift->error_code(); }
 has error_code => (
     is          => 'ro'
     , isa       => 'Maybe[WebService::MyGengo::ErrorCode]'
@@ -110,7 +109,7 @@ the status_line from the raw response.
 The raw HTTP response is available via `$response->_raw_response`.
 
 =cut
-sub message { shift->error_message }
+sub message { shift->error_message(); }
 has error_message => (
     is          => 'ro'
     , isa       => 'Maybe[Str]'
