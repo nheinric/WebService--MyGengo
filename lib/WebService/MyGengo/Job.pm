@@ -179,11 +179,12 @@ This is only here to support the 'comment' option for the constructor.
 
 Returns the body of the most recently-added comment.
 
+
 =cut
 has comment => (
     is          => 'ro'
-#    , isa       => 'Maybe[WebService::MyGengo::Comment]' # todo Coercion fails
-    , isa       => 'Maybe[Str]'
+    , isa       => 'WebService::MyGengo::Comment|Undef'
+    , coerce    => 1
     , lazy      => 1
     , clearer   => '_clear_comment'
     , default   => sub {
@@ -193,8 +194,9 @@ has comment => (
         }
     , trigger   => sub {
         my ( $self ) = ( shift );
-        $self->_add_comment( WebService::MyGengo::Comment->new( @_ ) );
-        $self->_clear_comment; # We always want the latest one
+        @_ or next;
+        $self->_add_comment( @_ );
+        $self->_clear_comment; # Refresh comment on every call
         }
     );
 

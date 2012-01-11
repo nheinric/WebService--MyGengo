@@ -41,7 +41,11 @@ subtype 'WebService::MyGengo::Comment::body'
     , as 'Str';
 coerce 'WebService::MyGengo::Comment::body'
     , from 'Undef', via { '' };
-has 'body' => ( is => 'ro' , isa => 'Str', required => 1 );
+has 'body' => (
+    is          => 'ro'
+    , isa => 'WebService::MyGengo::Comment::body'
+    , required => 1
+    );
 
 =head2 author (Str)
 
@@ -81,8 +85,8 @@ has 'ctime' => (
 #
 #=cut
 around BUILDARGS => sub {
-    my ( $orig, $class, $val ) = ( @_ );
-    ref($val) eq 'HASH' and return $val;
+    my ( $orig, $class, $val ) = ( shift, shift, @_ );
+    (ref($val) eq 'HASH' || $#_) and return $class->$orig( @_ );
     return { body => $val };
 };
 

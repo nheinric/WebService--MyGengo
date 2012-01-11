@@ -21,9 +21,8 @@ use Test::More;
 use Data::Dumper;
 
 BEGIN {
-    use_ok 'WebService::MyGengo::Base';
-    use_ok 'WebService::MyGengo::Client';
     use_ok 'WebService::MyGengo::Job';
+    use_ok 'WebService::MyGengo::Comment';
     use_ok 'WebService::MyGengo::Revision';
 }
 
@@ -50,6 +49,7 @@ my $tests = [
     , 'utf8_body_survives_comment_creation_by_string'
     , 'utf8_body_survives_comment_creation_by_object'
     , 'comments_are_fifo'
+    , 'comment_stringifies_to_body'
     ];
 
 my $client = client();
@@ -97,7 +97,7 @@ sub can_submit_new_job {
         # We have no reliable way to verify these
         $attr =~ /^(ctime|eta|credits|status|unit_count|job_id|_comments|slug|body_tgt|mt)$/
             and next;
-        is( $job2->$attr, $job->$attr, "Attr. '$attr' matches" );
+        is( ''.$job2->$attr, ''.$job->$attr, "Attr. '$attr' matches" );
     }
 
     ok( $job2->id, "Has an ID" );
@@ -266,4 +266,16 @@ sub comments_are_fifo {
     my $com = $job->get_comment( $job->comment_count-1 );
 
     is( $com->body, $comment, "Bodies match" );
+}
+
+sub comment_stringifies_to_body {
+    my $job = create_dummy_job($client);
+    push @_dummies, $job;
+
+    my $comment = "Wouldn't ya like to be a FIFO too?";
+    $job = $client->add_job_comment( $job, $comment );
+
+    my $com = $job->get_comment( $job->comment_count-1 );
+
+    is( "$com", $comment, "Stringification worked" );
 }
