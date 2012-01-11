@@ -589,10 +589,11 @@ sub get_job_feedback {
         );
 }
 
-=head2 determine_translation_cost( \@(WebService::MyGengo::Job) )
+=head2 determine_translation_cost( $WebService::MyGengo::Job|\@(WebService::MyGengo::Job) )
 
-Given a list of Jobs, determines the cost to translate them. The Jobs
-are not saved to myGengo and the user is not charged for them.
+Given a single Job, or a reference to a list of Jobs, determines the cost to
+translate them. The Jobs are not saved to myGengo and the user is not charged
+for them.
 
 The only Job fields required to determine cost are: lc_src, lc_tgt, tier and
 body_src. (However, this method makes no effort to ensure you have set
@@ -608,12 +609,14 @@ probably won't be passing in fully-composed Jobs anyhow.
 
 =cut
 sub determine_translation_cost { 
-    my ($self, $jobs) = @_;
+    my ( $self, $jobs ) = ( shift, @_ );
 
-    !( ref($jobs) eq 'ARRAY' && scalar(@$jobs) ) and
+    !( $jobs ) and
         WebService::MyGengo::Exception->throw({
-            message => "Cannot determine_translation_cost without Jobs."
+            message => "Cannot determine_translation_cost without a Job."
             });
+
+    ref($jobs) ne 'ARRAY' and $jobs = [$jobs];
 
     my $i = 0;
     my $res = $self->_send_request('POST', '/translate/service/quote', {
