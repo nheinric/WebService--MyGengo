@@ -728,7 +728,7 @@ sub submit_jobs {
         my $args =
             ref($_) eq 'ARRAY'
             ? $_->[0]
-            : $_->{ (keys $_)[0] };
+            : $_->{ (keys %$_)[0] };
 
         $struct->{group_id} and $args->{group_id} = $struct->{group_id};
 
