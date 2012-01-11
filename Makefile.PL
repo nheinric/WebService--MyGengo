@@ -32,4 +32,5 @@ test_requires 'Getopt::Long';
 test_requires 'URI::Escape';
 
 auto_install;
+manifest_skip;
 WriteAll;
