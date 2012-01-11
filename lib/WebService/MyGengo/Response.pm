@@ -21,7 +21,7 @@ Wraps a L<HTTP::Response> received from the API with extra functionality.
 
 =head1 SYNOPSIS
 
-    # Responses are created for you by WebService::MyGengo::Client
+    # Responses usually created for you by WebService::MyGengo::Client
     my $http_res = $user_agent->request( $some_request );
     my $res = WebService::MyGengo::Response->new( $http_res );
 
@@ -59,22 +59,22 @@ sub _build_response_struct {
     return $struct;
 }
 
-=head2 error_code
+=head2 error_code|code
 
-If the HTTP request was successful, but the API returned an error response,
-returns the API error code.
+The API-specific error code from the Response.
 
-If the HTTP request was successful and the API returned a non-error response,
-returns undef.
+If the API request was successful, returns undef.
 
-If the L<HTTP::Response> itself was an error, no API payload will be available;
- In this case returns 0.
+If the API returned an error, returns the API error code.
 
-todo Use the Exception object or make an APIError object
+If the L<HTTP::Response> is_error, or no API payload is available, returns 0.
 
-todo This needs a big rethink: complex.
+The raw HTTP response is available via `$response->_raw_response`.
+
+todo Relationship between this object and L<HTTP::Response> needs a rethink.
 
 =cut
+sub code { shift->error_message }
 has error_code => (
     is          => 'ro'
     , isa       => 'Maybe[WebService::MyGengo::ErrorCode]'
@@ -84,10 +84,11 @@ has error_code => (
 sub _build_error_code {
     my ( $self ) = ( shift );
 
-    $self->_raw_response->is_error and return 0;
+    my $raw_res = $self->_raw_response;
+    my $struct;
 
-    my $struct = $self->_deserialized
-        or return undef;
+    ( $raw_res->is_error || !( $struct = $self->_deserialized ) )
+        and return 0;
 
     $struct->{opstat} eq 'error'
         and return $struct->{err}->{code};
@@ -95,21 +96,54 @@ sub _build_error_code {
     return undef;
 }
 
+=head2 message
+
+The API-specific error message from the Response.
+
+If the API request was successful, returns "OK".
+
+If the API returned an error response, returns the API error message.
+
+If the L<HTTP::Response> is_error, or no API payload is available, returns
+the status_line from the raw response.
+
+The raw HTTP response is available via `$response->_raw_response`.
+
+=cut
+sub message { shift->error_message }
+has error_message => (
+    is          => 'ro'
+    , isa       => 'Maybe[Str]'
+    , lazy      => 1
+    , builder   => '_build_error_message'
+    );
+sub _build_error_message {
+    my ( $self ) = ( shift );
+
+    my $raw_res = $self->_raw_response;
+    my $struct;
+
+    ( $raw_res->is_error || !( $struct = $self->_deserialized ) )
+        and return $raw_res->status_line;
+
+    $struct->{opstat} eq 'error'
+        and return $struct->{err}->{msg};
+
+    return "OK";
+}
+
 =head2 _raw_response
 
 The original HTTP::Response object.
-
-Provides: code, message, status_line
 
 =cut
 has _raw_response => (
     is          => 'ro'
     , isa       => 'HTTP::Response'
     , required  => 1
-    # todo I think there's moose sugar to avoid listing all of these
-    , handles => [ qw/code message status_line/ ]
-#                code message header content decoded_content request previous
-#                status_line base filename as_string is_info
+#    , handles => [ qw/code message status_line
+#                header content decoded_content request previous
+#                base filename as_string is_info
 #                is_redirect error_as_HTML redirects current_age
 #                freshness_lifetime is_fresh fresh_until
 #                / ]
@@ -133,13 +167,15 @@ sub _build__serializer {
     return new JSON;
 }
 
-=head2 _deserialized
-
-The deserialized response body.
-
-Returns undef if the body could not be deserialized.
-
-=cut
+#=head2 _deserialized
+#
+#The deserialized response body.
+#
+#Returns undef if the body could not be deserialized.
+#
+#See L<response_struct>
+#
+#=cut
 has _deserialized => (
     is          => 'ro'
     , isa       => 'Maybe[HashRef]'
@@ -163,12 +199,13 @@ sub _build__deserialized {
 }
    
 =head1 METHODS
-
-=head2 BUILDARGS
-
-Accept arguments as a list.
-
 =cut
+
+#=head2 BUILDARGS
+#
+#Accept arguments as a list.
+#
+#=cut
 around BUILDARGS  => sub {
     my ( $orig, $class, $args ) = ( shift, shift, @_ );
 
