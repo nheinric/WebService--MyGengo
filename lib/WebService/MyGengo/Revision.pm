@@ -1,7 +1,6 @@
 package WebService::MyGengo::Revision;
 
 use Moose;
-use Moose::Util::TypeConstraints;
 
 BEGIN { extends 'WebService::MyGengo::Base' };
 

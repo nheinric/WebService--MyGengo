@@ -1,7 +1,6 @@
 package WebService::MyGengo::LanguagePair;
 
 use Moose;
-use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 
 BEGIN { extends 'WebService::MyGengo::Base' };
