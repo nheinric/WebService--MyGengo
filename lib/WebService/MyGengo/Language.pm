@@ -7,8 +7,7 @@ BEGIN { extends 'WebService::MyGengo::Base' };
 
 =head1 NAME
 
-WebService::MyGengo::Language - An object representing a translatable
-language.
+WebService::MyGengo::Language - An object representing a translatable language in the myGengo system
 
 =head1 SYNOPSIS
 

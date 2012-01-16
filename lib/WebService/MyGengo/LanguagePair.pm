@@ -7,7 +7,7 @@ BEGIN { extends 'WebService::MyGengo::Base' };
 
 =head1 NAME
 
-WebService::MyGengo::LanguagePair - An object representing a Src -> Dst translation language pair
+WebService::MyGengo::LanguagePair - An object representing a Src -> Dst translation language pair in the myGengo system
 
 =head1 SYNOPSIS
 
@@ -67,10 +67,10 @@ has 'unit_price' => (
 __PACKAGE__->meta->make_immutable();
 1;
 
-=head2 TODO
-
- * Provide accessors to retrieve L<WebService::MyGengo::Language> objects for each of the languages
-
+#=head2 TODO
+#
+# * Provide accessors to retrieve L<WebService::MyGengo::Language> objects for each of the languages
+#
 =head2 SEE ALSO
 
 L<http://mygengo.com/api/developer-docs/methods/translate-service-language-pairs-get/>

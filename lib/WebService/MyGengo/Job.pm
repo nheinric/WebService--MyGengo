@@ -32,7 +32,7 @@ A unique identifier for the Job.
 
 A unique identifier for a group of Jobs.
 
-See L<submit_jobs>
+See L<WebService::MyGengo::Client>'s `submit_jobs` method.
 
 =head2 slug (Str)
 
@@ -66,8 +66,7 @@ The number of units (words or characters) in the body_src.
 
 =head2 tier (Str)
 
-The tier under which this Job is being performed: machine, standard, pro, ultra
-, ultra_pro
+The tier under which this Job is being translated: machine, standard, pro, ultra, ultra_pro
 
 =head2 credits (Num)
 
@@ -75,8 +74,7 @@ A decimal figure representing how many credits this Job will cost.
 
 =head2 status (Str)
 
-The Job's status: unpaid, available, pending, reviewable, revising, approved
-, rejected, cancelled, held
+The Job's status: unpaid, available, pending, reviewable, revising, approved, rejected, cancelled, held
 
 =head2 eta (DateTime::Duration)
 
@@ -100,7 +98,7 @@ Whether to only allow a "preferred translator" to work this Job.
 
 =head2 auto_approve (Bool)
 
-Whether to automatically approve this Job once a translation is submitted.
+Whether to automatically approve this Job once the translation is completed.
 
 =head2 mt (Bool)
 
@@ -110,8 +108,6 @@ Whether the body_tgt was translated via machine translation.
 
 A URL to which events related to this Job should be posted.
 
-todo Make a URI object.
-
 =head2 captcha_url (Str)
 
 A URL pointing to a captcha image.
@@ -120,8 +116,6 @@ This will be set on Jobs in 'reviewable' status and must be submitted when
 rejecting a Job.
 
 See L<WebService::MyGengo::Client>'s `reject_job` method.
-
-todo Make a URI object.
 
 =head2 preview_url (Str)
 
@@ -172,17 +166,18 @@ has [qw/callback_url captcha_url preview_url/] => (
     , isa       => 'Maybe[Str]' # todo URI constraint/coercion
     );
 
-=head2 comment
+=head2 comment (WebService::MyGengo::Comment|Undef)
 
 This is only here to support the 'comment' option for the constructor.
 
-Returns the body of the most recently-added comment.
-
+Returns the most recently-added comment.
 
 =cut
 has comment => (
     is          => 'ro'
     , isa       => 'WebService::MyGengo::Comment|Undef'
+# todo Results in coercion errors
+#    , isa       => 'Maybe[WebService::MyGengo::Comment]'
     , coerce    => 1
     , lazy      => 1
     , clearer   => '_clear_comment'
@@ -261,7 +256,7 @@ sub _set_comments {
     return $self->comments;
 }
 
-=head2 revisions
+=head2 revisions (Array)
 
 A list of L<WebService::MyGengo::Revision> objects for this Job.
 
@@ -322,7 +317,7 @@ sub _set_revisions {
     return $self->revisions;
 }
 
-=head2 feedback
+=head2 feedback (WebService::MyGengo::Feedback|Undef)
 
 A L<WebService::MyGengo::Feedback> object for this Job.
 
@@ -399,9 +394,8 @@ We also remove the feedback entry.
 
 See: L<WebService::MyGengo::Base>
 
-todo Use traits
-
 =cut
+#todo Use traits for serialization
 around to_hash => sub {
     my ( $orig, $self ) = ( shift, shift );
 

@@ -14,7 +14,7 @@ use JSON qw(encode_json);
 
 =head1 NAME
 
-WebService::MyGengo::RequestFactory - An API request factory
+WebService::MyGengo::RequestFactory - A factory for creating myGengo API requests
 
 =head1 DESCRIPTION
 

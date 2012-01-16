@@ -8,4 +8,5 @@ blib/
 pm_to_blib
 MANIFEST.bak
 svn-commit.tmp
--[v0-9.]+\.tar\.gz
+WebService-MyGengo-*.tar.gz
+a

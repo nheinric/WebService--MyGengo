@@ -17,10 +17,9 @@ WebService::MyGengo namespace
 
 Provides custom subtypes and coercions used by child classes.
 
-todo These are supposed to be global. So can I just define them
-in the classes in which they're used, instead?
-
 =cut
+#todo These are supposed to be global. So can I just define them
+#in the classes in which they're used, instead?
 subtype 'WebService::MyGengo::LanguageCode'
     , as 'Str'
     , where { my $len = length($_); ($len == 2 || $len ==  5) }
@@ -150,9 +149,8 @@ A list of attribute names to be serialized by the `to_struct` method.
 
 Override `_build_attributes_to_serialize` in subclasses.
 
-todo Use traits.
-
 =cut
+#todo Use traits for serializable attributes.
 has attributes_to_serialize => (
     is      => 'ro'
     , isa   => 'ArrayRef'
@@ -182,9 +180,8 @@ A custom set of attributes can be retrieved by supplying the optional
 If you supply an empty arrayref for `\@attributes` then all public attributes of
 the object will be supplied.
 
-todo Make this less icky.
-
 =cut
+#todo Again: use traits for serializable attributes.
 sub to_hash {
     my ( $self, $attrs ) = ( shift, @_ );
 

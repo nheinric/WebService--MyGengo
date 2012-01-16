@@ -437,11 +437,9 @@ get a reference to an empty array, as expected.)
 
 See: L<http://mygengo.com/api/developer-docs/methods/translate-jobs-get/>
 
-todo Support wantarray?
-
-todo Support get_comments/feedback/revisions
-
 =cut
+#todo Support wantarray?
+#todo Support get_comments/feedback/revisions
 sub search_jobs { 
     my ($self, $status, $timestamp_after, $count) = ( shift, @_ );
     
@@ -466,9 +464,8 @@ Returns a reference to an array of L<WebService::MyGengo::Comment> objects.
 
 You may find it easier to simply use L<get_job> with the $get_comments flag.
 
-todo Support wantarray?
-
 =cut
+#todo Support wantarray?
 sub get_job_comments { 
     my ( $self, $job ) = ( shift, @_ );
 
@@ -532,9 +529,8 @@ You may find it easier to simply use L<get_job> with the $get_revisions flag.
 
 See L<http://mygengo.com/api/developer-docs/methods/translate-job-id-revision-rev-id-get/>
 
-todo Support wantarray?
-
 =cut
+#todo Support wantarray?
 sub get_job_revisions { 
     my ( $self, $job ) = ( shift, @_ );
 
@@ -604,10 +600,8 @@ attributes set.
 
 See: L<http://mygengo.com/api/developer-docs/methods/translate-service-quote-post/>
 
-todo Proper Job cloning. We might lose comments/etc. as-is, although people
-probably won't be passing in fully-composed Jobs anyhow.
-
 =cut
+#todo Proper Job cloning. We might lose comments/etc. as-is, although people probably won't be passing in fully-composed Jobs anyhow.
 sub determine_translation_cost { 
     my ( $self, $jobs ) = ( shift, @_ );
 
@@ -849,11 +843,8 @@ does not accurately describe the action performed.
 
 See L<http://mygengo.com/api/developer-docs/methods/translate-job-id-put/>
 
-todo Making these specialized requests into subclasses, or using roles/traits,
-would make things nicer. The client shouldnt have to know this much about the
-guts of a request.
-
 =cut
+#todo Making these specialized requests into subclasses, or using roles/traits, would make things nicer. The client shouldnt have to know this much about the guts of a request.
 sub revise_job { shift->request_job_revision(@_) }
 sub request_job_revision {
     my ( $self, $job, $comment ) = ( shift, @_ );
@@ -888,11 +879,8 @@ Returns the Job, updated from the API, on success.
 
 See L<http://mygengo.com/api/developer-docs/methods/translate-job-id-put/>
 
-todo Making these specialized requests into subclasses, or using roles/traits,
-would make things nicer. The client shouldnt have to know this much about the
-guts of a request.
-
 =cut
+#todo Making these specialized requests into subclasses, or using roles/traits, would make things nicer. The client shouldnt have to know this much about the guts of a request.
 sub approve_job {
     my ( $self, $job, $rating, $for_translator, $for_mygengo, $public_comment)
         = ( shift, @_ );
@@ -934,11 +922,8 @@ Returns the Job, updated from the API, on success.
 
 See L<http://mygengo.com/api/developer-docs/methods/translate-job-id-put/>
 
-todo Making these specialized requests into subclasses, or using roles/traits,
-would make things nicer. The client shouldnt have to know this much about the
-guts of a request.
-
 =cut
+#todo Making these specialized requests into subclasses, or using roles/traits, would make things nicer. The client shouldnt have to know this much about the guts of a request.
 sub reject_job {
     my ( $self, $job, $reason, $comment, $captcha, $follow_up ) = ( shift, @_ );
 
@@ -993,9 +978,8 @@ Returns a refernece to an array of L<WebService::MyGengo::LanguagePair> objects.
 
 See: L<http://mygengo.com/api/developer-docs/methods/translate-service-language-pairs-get/>
 
-todo Support wantarray?
-
 =cut
+#todo Support wantarray?
 sub get_service_language_pairs { 
     my ( $self, $lc_src ) = ( shift, @_ );
     
@@ -1020,9 +1004,8 @@ Returns a reference to an array of L<WebService::MyGengo::Language> objects.
 
 See: L<http://mygengo.com/api/developer-docs/methods/translate-service-languages-get/>
 
-todo Support wantarray?
-
 =cut
+#todo Support wantarray?
 sub get_service_languages { 
     my ($self) = @_;
 

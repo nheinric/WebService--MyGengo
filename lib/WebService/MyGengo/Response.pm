@@ -10,11 +10,9 @@ use JSON;
 
 =head1 NAME
 
-WebService::MyGengo::Response - An API response object
+WebService::MyGengo::Response - An response from the myGengo API
 
 =head1 DESCRIPTION
-
-A generic API response object.
 
 Wraps a L<HTTP::Response> received from the API with extra functionality.
 
@@ -70,9 +68,8 @@ If the L<HTTP::Response> is_error, or no API payload is available, returns 0.
 
 The raw HTTP response is available via `$response->_raw_response`.
 
-todo Relationship between this object and L<HTTP::Response> needs a rethink.
-
 =cut
+#todo Relationship between this object and L<HTTP::Response> needs a rethink.
 sub code { shift->error_code(); }
 has error_code => (
     is          => 'ro'
@@ -148,13 +145,13 @@ has _raw_response => (
 #                / ]
     );
 
-=head2 _serializer
-
-A JSON object.
-
-B<Note:> The API also supports XML. We do not. :)
-
-=cut
+#=head2 _serializer
+#
+#A JSON object.
+#
+#B<Note:> The API also supports XML. We do not. :)
+#
+#=cut
 has _serializer => (
     is          => 'ro'
     , isa       => 'JSON'
@@ -237,10 +234,6 @@ sub is_error { return !shift->is_success; }
 
 __PACKAGE__->meta->make_immutable( inline_constructor => 0 );
 1;
-
-=head2 TODO
-
- * Would inheriting from L<HTTP::Response> be worthwhile?
 
 =head1 AUTHOR
 
