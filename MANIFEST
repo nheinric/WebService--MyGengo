@@ -46,4 +46,3 @@ t/lib/Webservice/MyGengo/Test/Util/Client.pm
 t/lib/Webservice/MyGengo/Test/Util/Config.pm
 t/lib/Webservice/MyGengo/Test/Util/Job.pm
 TESTING.mkdn
-WebService-MyGengo-0.010.tar.gz
