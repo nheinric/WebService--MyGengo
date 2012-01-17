@@ -910,7 +910,7 @@ sub approve_job {
     return $self->get_job( $job_id, 1, 1, 1 );
 }
 
-=head2 reject_job( $WebService::MyGengo::Job|id, $reason, $comment, $captcha, $follow_up? )
+=head2 reject_job( $WebService::MyGengo::Job|id, $reason, $comment, $captcha, $follow_up=requeue? )
 
 Rejects the given Job.
 
