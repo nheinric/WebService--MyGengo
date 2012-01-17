@@ -16,6 +16,10 @@ As of this writing, all interaction with the API is handled via the
 L<WebService::MyGengo::Client> class, in which you will find more enlightening
 documentation.
 
+=head1 SEE ALSO
+
+This module on GitHub: L<https://github.com/nheinric/WebService--MyGengo>
+
 =head1 AUTHOR
 
 Nathaniel Heinrichs

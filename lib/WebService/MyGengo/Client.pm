@@ -144,17 +144,18 @@ with the agent to dump raw requests and responses.
 
 =cut
 has _user_agent => (
-    is => 'rw'
-    , writer => '_set_user_agent' # Semi-private
-    , isa => 'LWP::UserAgent'
-    , lazy_build => 1
-    , init_arg => undef
+    is          => 'rw'
+    , writer    => '_set_user_agent' # Semi-private
+    , isa       => 'LWP::UserAgent'
+    , lazy      => 1
+    , builder   => '_build__user_agent'
+    , init_arg  => undef
     );
 sub _build__user_agent {
     my ( $self ) = ( shift );
 
     my $ua = LWP::UserAgent->new(
-        agent           => $self->user_agent_string
+        agent           => $self->_user_agent_string
         , timeout       => 30
         , max_redirect  => 5
         );
@@ -177,12 +178,12 @@ sub _build__user_agent {
     return $ua;
 }
 
-=head2 user_agent_string (Str)
-
-The User-Agent string reported by the client.
-
-=cut
-has user_agent_string => (
+#=head2 _user_agent_string (Str)
+#
+#The User-Agent string reported by the client.
+#
+#=cut
+has _user_agent_string => (
     is          => 'ro'
     , isa       => 'Str'
     , lazy      => 1
@@ -257,7 +258,7 @@ around BUILDARGS => sub {
     ref($args) eq 'HASH' and return $class->$orig(@_);
 
     my %args;
-    @args{ qw/public_key private_key use_sandbox user_agent_string/ }
+    @args{ qw/public_key private_key use_sandbox _user_agent_string/ }
         = @_;
 
     return \%args;
@@ -361,9 +362,9 @@ Retrieves the given Jobs from the API.
 The second form allows control over prefetching of comments, revisions and
 feedback for the Jobs.
 
-Returns a reference to an array of L<WebService::MyGengo::Job>s on success,
-undef on failure.  (If no results are found but the request succeeded, you'll
-get a reference to an empty array, as expected.)
+Returns a reference to an array of L<WebService::MyGengo::Job> objects on
+success, undef on failure.  (If no results are found but the request succeeded,
+you'll get a reference to an empty array, as expected.)
 
 See: L<http://mygengo.com/api/developer-docs/methods/translate-jobs-ids-get/>
 
@@ -427,7 +428,7 @@ Legal values: unpaid, available, pending, reviewable, approved, rejected
 =item $timestamp_after - Get only Jobs created after this epoch time (default:
 no filter)
 
-=item $count - Get a maximum of $count Jobs (default: 10)
+=item $count - Get a maximum of $count Jobs (default: no filter)
 
 =back
 
@@ -464,6 +465,8 @@ Returns a reference to an array of L<WebService::MyGengo::Comment> objects.
 
 You may find it easier to simply use L<get_job> with the $get_comments flag.
 
+See: L<http://mygengo.com/api/developer-docs/methods/translate-job-id-comments-get/>
+
 =cut
 #todo Support wantarray?
 sub get_job_comments { 
@@ -493,6 +496,8 @@ sub get_job_comments {
 Gets a specific revision for the given Job.
 
 Returns an L<WebService::MyGengo::Revision> object.
+
+See L<http://mygengo.com/api/developer-docs/methods/translate-job-id-revision-rev-id-get/>
 
 =cut
 sub get_job_revision {
@@ -527,7 +532,7 @@ Returns a reference to an array of L<WebService::MyGengo::Revision> objects.
 
 You may find it easier to simply use L<get_job> with the $get_revisions flag.
 
-See L<http://mygengo.com/api/developer-docs/methods/translate-job-id-revision-rev-id-get/>
+See: L<http://mygengo.com/api/developer-docs/methods/translate-job-id-revisions-get/>
 
 =cut
 #todo Support wantarray?
@@ -1078,6 +1083,8 @@ library is in violation of the myGengo license please notify me.
 =head1 SEE ALSO
 
 myGengo API documentation: L<http://mygengo.com/api/developer-docs/>
+
+This module on GitHub: L<https://github.com/nheinric/WebService--MyGengo>
 
 =head1 AUTHOR
 
