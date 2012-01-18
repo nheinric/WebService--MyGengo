@@ -11,6 +11,10 @@ As of this writing, all interaction with the API is handled via the
 [WebService::MyGengo::Client](http://search.cpan.org/perldoc?WebService::MyGengo::Client) class, in which you will find more enlightening
 documentation.
 
+# SEE ALSO
+
+This module on GitHub: [https://github.com/nheinric/WebService--MyGengo](https://github.com/nheinric/WebService--MyGengo)
+
 # AUTHOR
 
 Nathaniel Heinrichs

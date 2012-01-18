@@ -41,8 +41,8 @@ t/040-languages.t
 t/050-client.t
 t/author/pod-coverage.t
 t/author/pod.t
-t/lib/Webservice/MyGengo/Test/Mock/LWP.pm
-t/lib/Webservice/MyGengo/Test/Util/Client.pm
-t/lib/Webservice/MyGengo/Test/Util/Config.pm
-t/lib/Webservice/MyGengo/Test/Util/Job.pm
+t/lib/WebService/MyGengo/Test/Mock/LWP.pm
+t/lib/WebService/MyGengo/Test/Util/Client.pm
+t/lib/WebService/MyGengo/Test/Util/Config.pm
+t/lib/WebService/MyGengo/Test/Util/Job.pm
 TESTING.mkdn
